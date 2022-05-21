@@ -1,0 +1,4 @@
+Allegro5 initialized
+Game begin
+Key with keycode 0 down
+Key with keycode 0 up
