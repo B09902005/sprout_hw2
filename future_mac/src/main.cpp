@@ -47,7 +47,8 @@ int main(int argc, char **argv) {
     if (!al_init_image_addon()) LOG::game_abort("failed to initialize image add-on");
 	if (!al_install_keyboard()) LOG::game_abort("failed to install keyboard");
 
-    	update_timer = al_create_timer(1.0f / FPS);
+    // create timer and event queue
+    update_timer = al_create_timer(1.0f / FPS);
     if (!update_timer) LOG::game_abort("failed to create timer");
     
 	event_queue = al_create_event_queue();
@@ -59,25 +60,28 @@ int main(int argc, char **argv) {
     al_start_timer(update_timer);
     
     LOG::game_log("Allegro5 initialized");
-    Menu menu;
-    MainGame mainGame;
-    End end;
+    // create scene
+    Menu menu; // Welcome to sprout HW2. Press any key to play.
+    MainGame mainGame; // (playing...)
+    End end; // ... wins the game. Press ENTER to play or ESC to exist.
     while(true){
+        // enable scene and start event
         menu.done = false;
         LOG::game_log("Game begin");
         menu.start_event_loop();
-        if(menu.finish)break;
+        if(menu.finish)break; // if close window or ctrl+c, finish will be set true
         runtime = 0;
         mainGame.done = false;
         mainGame.initial();
         mainGame.start_event_loop();
-        if(mainGame.finish)break;
+        if(mainGame.finish)break; // if close window or ctrl+c, finish will be set true
         end.done = false;
         end.start_event_loop();
         if(end.finish)break;
-        LOG::game_log("Game end");
+        LOG::game_log("Game end"); // if close window or ctrl+c or ESC, finish will be set true
+        // if all finish are false, then back to the start of the while loop. (restart the game again)
     }
-
+    // release resource
     al_destroy_timer(update_timer);
     al_destroy_event_queue(event_queue);
     al_destroy_display(game_display);
