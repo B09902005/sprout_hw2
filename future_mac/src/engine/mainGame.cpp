@@ -24,7 +24,7 @@ bool collision(Object *a, Object *b){
 	}else if(dynamic_cast<Player*> (b)){
 		if(a->x >= b->x && a->x <= b->x + 2 && a->y >= b->y && a->y <= b->y + 2)return true; // for the case that b is Player*
 	}else{
-		if(a->x >= b->x && a->x < b->x + 1 && a->y >= b->y && a->y < b->y + 1)return true; // for the case that neither a nor b are Player*
+		if(a->x+1 >= b->x && a->x < b->x + 1 && a->y+1 >= b->y && a->y < b->y + 1)return true; // for the case that neither a nor b are Player*
 	}
 	return false;
 }
