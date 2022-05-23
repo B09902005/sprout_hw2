@@ -113,7 +113,7 @@ void MainGame::draw(void) {
 	for(auto obj : this->object_list){
 		if(dynamic_cast<Player*> (obj)){
 			// Player's size is 3 * scale * 3 * (scale * 2) 
-			al_draw_bitmap(obj->img, left_space + obj->x * scale,upper_space + obj->y * scale * 2, 0);
+			al_draw_bitmap(obj->img, left_space + obj->x * scale, upper_space + obj->y * scale * 2, 0);
 		}else{
 			// every object's size is scale * (scale * 2)
 			al_draw_bitmap(obj->img, left_space + obj->x * scale, upper_space + obj->y * scale * 2, 0);
@@ -306,7 +306,7 @@ void MainGame::update(void) {
 				auto po = dynamic_cast<Potion*> (*to);
 				// check what type of the potion 
 				if(po->type == 0){
-					py->hp += 30;
+                    py->hp = std::min(100, py->hp + 30);
 				}else if(po->type == 1){
 					py->bullet_power += 1;
 				}else if(po->type == 2){

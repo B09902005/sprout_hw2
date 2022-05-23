@@ -21,7 +21,7 @@ extern const int word_space;
 
 class Object{
 	public:	
-		// construct with image path name and path size
+		// construct with image path name and size
 		Object(float _x, float _y, float _speedX, float _speedY, std::string path, int w, int h){
 			this->x = _x;
 			this->y = _y;

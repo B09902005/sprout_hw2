@@ -14,7 +14,7 @@ class Bullet : public Object{
 		Bullet(float _x, float _y, float _speedX, float _speedy, std::string path, int w, int h, int type);
 		Bullet(float _x, float _y, float _speedX, float _speedy, ALLEGRO_BITMAP *_img, int type);
 		// record which player create this bullet
-		int type;
+		int type; // 1 if shot by Player1. 2 if shot by Player2.
 };
 
 #endif
