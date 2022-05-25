@@ -43,11 +43,15 @@ MainGame::MainGame() {
 		LOG::game_abort("failed to load font: pirulen.ttf");
 	// load object image
     this->asteroid_img = ImageProcess::load_bitmap_at_size("./image/asteroid.png", scale, scale * 2);
-    if (!this->asteroid_img)
+
+    if (!this->asteroid_img){
         LOG::game_abort("failed to load asteroid image");
+	}
+	// load bullet image
 	this->bullet_img = ImageProcess::load_bitmap_at_size("./image/bullet.png", scale, scale * 2);
 	if (!this->bullet_img)
 		LOG::game_abort("failed to load bullet image");
+	// load another bullet image
 	this->bullet2_img = ImageProcess::load_bitmap_at_size("./image/bullet2.png", scale, scale * 2);
 	if (!this->bullet2_img)
 		LOG::game_abort("failed to load bullet2 image");
@@ -253,6 +257,7 @@ void MainGame::update(void) {
 	// update all object in the scene
 	for(auto obj = this->object_list.begin() ; obj != this->object_list.end() ;){
 		if(!(*obj)->update()){
+			delete *obj;
 			obj = this->object_list.erase(obj);
 		}else{
 			 obj++;
@@ -278,6 +283,7 @@ void MainGame::update(void) {
 					py->hp -= this->P2->bullet_power;
 				}
 				// erase bullet
+				delete *to;
 				to = this->object_list.erase(to);
 			}else if(dynamic_cast<Player*> (*from) && dynamic_cast<Asteroid*> (*to)){
 				// player collide asteroid
@@ -285,6 +291,7 @@ void MainGame::update(void) {
 				// decrease player hp
 				py->hp -= 3;
 				// erase asteroid
+				delete *to;
 				to = this->object_list.erase(to);
 			}else if(dynamic_cast<Bullet*> (*from) && dynamic_cast<Asteroid*> (*to)){
 				// bullet collide to asteroid
@@ -298,6 +305,7 @@ void MainGame::update(void) {
 				// erase from(bullet)
 				flag = 1;
 				// erase asteroid
+				delete *to;
 				to = this->object_list.erase(to);
 				break;
 			}else if(dynamic_cast<Player*> (*from) && dynamic_cast<Potion*> (*to)){
@@ -313,17 +321,20 @@ void MainGame::update(void) {
 					py->energy += 100;
 				}
 				// erase potion
+				delete *to;
 				to = this->object_list.erase(to);
 			}else if(dynamic_cast<Bullet*> (*from) && dynamic_cast<Bullet*> (*to)){
 				// bullet collide bullet
                 // erase both bullets
 				flag = 1;
+				delete *to;
 				to = this->object_list.erase(to);
 				break;
 			}else if(dynamic_cast<Asteroid*> (*from) && dynamic_cast<Asteroid*> (*to)){
 				// asteroid collide asteroid
                 // erase both asteroids
 				flag = 1;
+				delete *to;
 				to = this->object_list.erase(to);
 				break;
 			}else{
@@ -332,6 +343,7 @@ void MainGame::update(void) {
 			}
 		}
 		if(flag){
+			delete *from;
 			from = this->object_list.erase(from);
 		}else{
 			from++;

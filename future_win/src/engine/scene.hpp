@@ -31,7 +31,8 @@ extern int runtime;
 
 
 class Scene{
-	public:	
+	public:
+		virtual ~Scene();
 		bool done = false;
 		bool finish = false;
 		/* Declare function prototypes. */

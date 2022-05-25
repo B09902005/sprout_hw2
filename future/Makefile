@@ -18,10 +18,6 @@ all: bin/main
 
 clean:
 	rm -rf bin/
-	rm hw.out
-	
-source:
-	g++ hw.cpp -o hw.out
 
 bin/main: src/main.cpp $(_OBJS)
 	g++ $^ -o $@ $(CPP_FLAGS) -I$(INCLUDE_PATH) $(ALLEGRO_OPTIONS)

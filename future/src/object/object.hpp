@@ -41,7 +41,7 @@ class Object{
 			this->img = _img;
 		};
 		Object(){}
-		~Object(){
+		virtual ~Object(){
 			this->destroy();
 		}
 		// release resource

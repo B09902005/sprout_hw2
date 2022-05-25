@@ -6,6 +6,9 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 
+Scene::~Scene(){
+	
+}
 void Scene::start_event_loop(void) {
 	
 	ALLEGRO_EVENT event;

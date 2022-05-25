@@ -23,7 +23,7 @@ using namespace std;
 char frame[80][25];
 
 void PrintEverything(){
-    system("clear");
+    system("cls");
     for (int i=0 ; i<25 ; i++){
         for (int j=0 ; j<80 ; j++) cout << frame[j][i];
         cout << endl;
@@ -131,7 +131,7 @@ class SpaceShip{
     bool imDead; // is the ship dead?
     int shield_tick;
     int double_tick;
-    
+
     public:
     int NO() { return no; }
     int X()  { return x; }
@@ -155,33 +155,33 @@ class SpaceShip{
         shield_tick = -1;
         double_tick = -1;
     }
-    
+
     void DrawSpaceShipInfo(){ // Displays HP and energy points, I aligned them with the labels printed in DrawGameLimits
         int print_y;
         if (no == 1) print_y = 24;
         if (no == 2) print_y = 1;
-        
+
         DrawString(24, print_y, "   ");
         if      (hp >= 100) DrawString(24, print_y, to_string(hp));
         else if  (hp >= 10) DrawString(25, print_y, to_string(hp));
         else                DrawString(26, print_y, to_string(hp));
-        
+
         DrawString(44, print_y, "  ");
         if (power >= 10) DrawString(44, print_y, to_string(power));
         else             DrawString(45, print_y, to_string(power));
-                             
+
         DrawString(54, print_y, "   ");
         if      (exp >= 100) DrawString(54, print_y, to_string(exp));
         else if (exp >=  10) DrawString(55, print_y, to_string(exp));
         else                 DrawString(56, print_y, to_string(exp));
-        
+
         DrawString(67, print_y, "    ");
         if      (energy >= 1000) DrawString(67, print_y, to_string(energy));
         else if (energy >=  100) DrawString(68, print_y, to_string(energy));
         else if (energy >=   10) DrawString(69, print_y, to_string(energy));
         else                 DrawString(70, print_y, to_string(energy));
     }
-    
+
     void Erase(){ // This was our spaceship
         for (int i=0 ; i<3 ; i++) DrawString(x, y+i, "     ");
     }
@@ -198,13 +198,13 @@ class SpaceShip{
             DrawString(x, y+2, "  *  ");
         }
     }
-    
+
     void Damage(int power){ // Triggered by the asteroids or bullets that hit the spaceship
         hp -= power;
         DrawSpaceShipInfo();
         if (hp <= 0) Explosion();
     }
-    
+
     void Explosion(){ // When you lose a heart :c
         Draw();
         PrintEverything();
@@ -223,7 +223,7 @@ class SpaceShip{
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         imDead = true;
     }
-    
+
     bool CrashWithOpponent(SpaceShip ss, char direction){
         if (direction == 'a'){ // ss1 go left
             if ((x-1 == ss.X()+4) and (y <= ss.Y()+2) and (y+2 >= ss.Y())) return true;
@@ -236,7 +236,7 @@ class SpaceShip{
         }
         return false;
     }
-    
+
     void Move(char key){ // The main function of the spaceship
         energy ++;
         if (double_tick == 0) power /= 2;
@@ -261,11 +261,11 @@ class SpaceShip{
         }
         Draw(); // The spaceship is drawn regardless if you moved it or not, if you did then it will appear in it's new position.
     }
-    
+
     void shootbullet(){
         energy -= 5;
     }
-    
+
     void AddExp(int addexp){
         exp += addexp;
         while (exp >= 100){
@@ -275,7 +275,7 @@ class SpaceShip{
         }
         DrawSpaceShipInfo();
     }
-    
+
     void GetProp(char proptype){
         //  a for hp (20 and 50), b for exp (50 and 100), c for energy (20 and 100), d for shield (30 and 100 ticks), e for double (50 and 100 tick)
         if (proptype == 'a') hp += 10;
@@ -309,7 +309,7 @@ class Asteroid{
         y = _y;
         direction = _direction;
     }
-    
+
     bool isOut(){
         if ((y <= 2) or (y >= 22)){ // If the bullet reaches the top or bottom of the map
             frame[x][y] = '_'; // It disappears
@@ -321,7 +321,7 @@ class Asteroid{
         }
         return false;
     }
-    
+
     void MoveAndDraw(){
         if (y != 12) frame[x][y] = ' ';
         if (y == 12) frame[x][y] = '_';
@@ -331,7 +331,7 @@ class Asteroid{
         if (direction == 's') y ++;
         frame[x][y] = 'o'; // The shape of the asteroid
     }
-    
+
     bool Collision(SpaceShip *ss){ // The bullet finds the spaceship
         if( (x >= ss->X()) && (x <= ss->X() + 4) && (y >= ss->Y()) && (y <= ss->Y() + 2) ){ // Depending on the shape of the spaceship you have to tinker when the bullet really hits you
             if (ss -> SHIELD() == -1){
@@ -372,7 +372,7 @@ class Bullet{
         }
         power = ss.POWER();
     }
-    
+
     bool isOut(){
         if ((y <= 3) or (y >= 21)){ // If the bullet reaches the top or bottom of the map
             frame[x][y] = ' '; // It disappears
@@ -380,7 +380,7 @@ class Bullet{
             return true; // And informs the ame that it should no longer exist :c
         }else return false;
     }
-    
+
     void MoveAndDraw(){
         if (y != 12) frame[x][y] = ' '; // It disappears
         if (y == 12) frame[x][y] = '_';
@@ -388,7 +388,7 @@ class Bullet{
         if (no == 2) y++;
         frame[x][y] = '.'; // The shape of the bullet
     }
-    
+
     bool Collision(SpaceShip *ss){ // The bullet finds the spaceship
         if( (x >= ss->X()) && (x <= ss->X() + 4) && (y >= ss->Y()) && (y <= ss->Y() + 2) && (no != ss->NO()) ){ // Depending on the shape of the spaceship you have to tinker when the bullet really hits you
             if (ss -> SHIELD() == -1){
@@ -414,14 +414,14 @@ class Prop{
     //  a for hp (20 and 50), b for exp (50 and 100), c for energy (20 and 100), d for shield (30 and 100 ticks), e for double (50 and 100 tick)
     public:
     int TYPE()  { return type; }
-    
+
     Prop(int _x, int _y, char _type){
         x = _x;
         y = _y;
         type = _type;
         tick = 200;
     }
-    
+
     bool isOut(){
         if (tick <= 0){
             frame[x][y] = ' ';
@@ -429,12 +429,12 @@ class Prop{
         }
         return false;
     }
-    
+
     void MoveAndDraw(){
         tick --;
         frame[x][y] = type;
     }
-    
+
     bool Collision(SpaceShip *ss){ // The bullet finds the spaceship
         if( (x >= ss->X()) && (x <= ss->X() + 4) && (y >= ss->Y()) && (y <= ss->Y() + 2) ){ // Depending on the shape of the spaceship you have to tinker when the bullet really hits you
             ss->GetProp(type); // The bullet hurts
@@ -534,7 +534,7 @@ vector <int> AddExperience(list <Asteroid *> *Asteroids, list <Bullet *> *Bullet
                 if (astY != 12) frame[astX][astY] = ' '; // I still have my doubts in this part, but it tries to signal a collision, sometimes the X remains theme...
                 if (astY == 12) frame[astX][astY] = '_';
                 answer.at((*bullet)->NO()-1) += 20;
-                    
+
                 delete(*bullet); // You delete the bullet
                 bullet = Bullets -> erase(bullet);
                 delete(*asteroid);// And the asteroid
@@ -556,7 +556,7 @@ int main(){
     char key;
     key = getchar();
     char temp;
-    
+
     DrawGameLimits();
 
     list<Bullet*> Bullets; // We will use a dynamic list for the bullets in the game
@@ -564,7 +564,7 @@ int main(){
     list<Prop*> Props;
     SpaceShip ss1 = SpaceShip(1); // Here our adventure begins
     SpaceShip ss2 = SpaceShip(2);
-    
+
     PrintEverything();
     int tick = 0;
 
@@ -584,9 +584,9 @@ int main(){
             Bullets.push_back(new Bullet(ss2));
             ss2.shootbullet();
         }
-        
+
         Move(&Props);
-        
+
         vector <int> addexp;
         // Move bullets
         Move(&Bullets);
@@ -596,7 +596,7 @@ int main(){
         ss1.AddExp(addexp.at(0));
         ss2.AddExp(addexp.at(1));
         if ((ss1.isDead() == true) or (ss2.isDead() == true)) break;
-        
+
         Move(&Asteroids);
         CollisionWithSpaceship(&Asteroids, &ss1);
         CollisionWithSpaceship(&Asteroids, &ss2);
@@ -604,21 +604,21 @@ int main(){
         ss1.AddExp(addexp.at(0));
         ss2.AddExp(addexp.at(1));
         if ((ss1.isDead() == true) or (ss2.isDead() == true)) break;
-        
+
         char direction1 = HowToMove(ss1, Asteroids, Bullets);
         if (ss1.CrashWithOpponent(ss2, direction1) == false) ss1.Move(direction1);
         CollisionWithSpaceship(&Bullets, &ss1);
         CollisionWithSpaceship(&Asteroids, &ss1);
         CollisionWithSpaceship(&Props, &ss1);
         if ((ss1.isDead() == true) or (ss2.isDead() == true)) break;
-        
+
         char direction2 = HowToMove(ss2, Asteroids, Bullets);
         if (ss2.CrashWithOpponent(ss1, direction2) == false) ss2.Move(direction2);
         CollisionWithSpaceship(&Bullets, &ss2);
         CollisionWithSpaceship(&Asteroids, &ss2);
         CollisionWithSpaceship(&Props, &ss2);
         if ((ss1.isDead() == true) or (ss2.isDead() == true)) break;
-        
+
         PrintEverything();
         std::this_thread::sleep_for(std::chrono::milliseconds(30)); // This is essential, otherwise the game would be unplayable
     }

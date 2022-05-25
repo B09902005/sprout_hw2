@@ -1,6 +1,0 @@
-Allegro5 initialized
-Game begin
-Key with keycode 67 down
-Key with keycode 67 up
-Key with keycode 75 down
-Key with keycode 75 up

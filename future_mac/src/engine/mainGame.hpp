@@ -15,7 +15,7 @@ class MainGame : public Scene{
 		Player *P1, *P2;
 	public:
 		MainGame();
-		~MainGame();
+		virtual ~MainGame();
 		// store commonly used object image
 		ALLEGRO_FONT *font;
 		ALLEGRO_BITMAP *asteroid_img;
