@@ -1,3 +1,11 @@
 Allegro5 initialized
 Game begin
-Successful finish
+Key with keycode 67 down
+Key with keycode 67 up
+Key with keycode 75 down
+Key with keycode 75 up
+Key with keycode 75 down
+Key with keycode 75 up
+Key with keycode 75 down
+Key with keycode 75 up
+Key with keycode 59 down

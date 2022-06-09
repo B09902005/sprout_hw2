@@ -50,7 +50,7 @@ int main(int argc, char **argv) {
     // create timer and event queue
     update_timer = al_create_timer(1.0f / FPS);
     if (!update_timer) LOG::game_abort("failed to create timer");
-    
+
 	event_queue = al_create_event_queue();
     if (!event_queue) LOG::game_abort("failed to create event queue");
 
@@ -58,7 +58,7 @@ int main(int argc, char **argv) {
     al_register_event_source(event_queue, al_get_keyboard_event_source());
     al_register_event_source(event_queue, al_get_timer_event_source(update_timer));
     al_start_timer(update_timer);
-    
+
     LOG::game_log("Allegro5 initialized");
     // create scene
     Menu* menu = new Menu; // Welcome to sprout HW2. Press any key to play.
@@ -75,7 +75,6 @@ int main(int argc, char **argv) {
         mainGame->initial();
         mainGame->start_event_loop();
         if(mainGame->finish)break; // if close window or ctrl+c, finish will be set true
-        std::cout << mainGame->winner << std::endl;
         end->winner = mainGame->winner;
         end->done = false;
         end->start_event_loop();
