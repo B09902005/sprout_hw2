@@ -1,0 +1,3 @@
+Allegro5 initialized
+Game begin
+Successful finish

@@ -162,6 +162,11 @@ void MainGame::update(void) {
 
 	// if a player dies then the game ends.
 	if(this->P1->hp <= 0 || this->P2->hp <= 0){
+		if(this->P1->hp <= 0){
+			this->winner = 2;
+		}else{
+			this->winner = 1;
+		}
 		this->done = true;
 	}
 

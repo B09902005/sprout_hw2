@@ -75,6 +75,8 @@ int main(int argc, char **argv) {
         mainGame->initial();
         mainGame->start_event_loop();
         if(mainGame->finish)break; // if close window or ctrl+c, finish will be set true
+        std::cout << mainGame->winner << std::endl;
+        end->winner = mainGame->winner;
         end->done = false;
         end->start_event_loop();
         if(end->finish)break;

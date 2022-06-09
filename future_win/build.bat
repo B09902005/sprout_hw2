@@ -1,5 +1,5 @@
 @echo off
-set PATH=%PATH%;%cd%\mingw64\bin
+set PATH=%cd%\mingw64\bin;%PATH%
 del .\bin /Q
 md .\bin
 md .\bin\object
