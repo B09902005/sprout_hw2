@@ -21,3 +21,6 @@
 ## 長期努力方向：（5/28前）
   把想讓學員實作的東西決定好。 <br>
   處理coding style
+
+
+https://github.com/liballeg/allegro_wiki/wiki/Quickstart
